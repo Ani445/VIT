@@ -3,6 +3,7 @@ import os
 
 # Add the parent directory (VIT-Pytorch) to the sys.path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+print(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 import yaml
@@ -37,7 +38,7 @@ def train_for_one_epoch(epoch_idx, model, my_loader, optimizer):
     """
     losses = []
     criterion = torch.nn.CrossEntropyLoss()
-    for data in tqdm(my_loader, desc = f"epoch: {epoch_idx + 1}"):
+    for data in tqdm(my_loader):
         im = data['image'].float().to(device)
         number_cls = data['number_cls'].to(device)
         optimizer.zero_grad()
@@ -92,20 +93,30 @@ def train(args):
         os.mkdir(config['train_params']['task_name'])
     
     # Load checkpoint if found
+    start_epoch = 0
     if os.path.exists(os.path.join(config['train_params']['task_name'],
                                    config['train_params']['ckpt_name'])):
         print('Loading checkpoint')
-        model.load_state_dict(torch.load(os.path.join(config['train_params']['task_name'],
-                                                      config['train_params']['ckpt_name']), map_location=device))
+        ckpt = torch.load(os.path.join(config['train_params']['task_name'],
+                                                      config['train_params']['ckpt_name']), map_location=device)
+        model.load_state_dict(ckpt['state'])
+        if ckpt['epoch'] is not None:
+            start_epoch = ckpt['epoch'] + 1
+        else:
+            start_epoch = 1
     best_loss = np.inf
     
-    for epoch_idx in range(num_epochs):
+    for epoch_idx in range(start_epoch, num_epochs):
         mean_loss = train_for_one_epoch(epoch_idx, model, my_loader, optimizer)
         scheduler.step(mean_loss)
         # Simply update checkpoint if found better version
         if mean_loss < best_loss:
             print('Improved Loss to {:.4f} .... Saving Model'.format(mean_loss))
-            torch.save(model.state_dict(), os.path.join(config['train_params']['task_name'],
+            ckpt = {
+                'state': model.state_dict(),
+                'epoch': epoch_idx 
+            }
+            torch.save(ckpt, os.path.join(config['train_params']['task_name'],
                                                         config['train_params']['ckpt_name']))
             best_loss = mean_loss
         else:
