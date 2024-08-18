@@ -37,7 +37,7 @@ def train_for_one_epoch(epoch_idx, model, my_loader, optimizer):
     """
     losses = []
     criterion = torch.nn.CrossEntropyLoss()
-    for data in tqdm(my_loader):
+    for data in tqdm(my_loader, desc = f"epoch: {epoch_idx + 1}"):
         im = data['image'].float().to(device)
         number_cls = data['number_cls'].to(device)
         optimizer.zero_grad()
