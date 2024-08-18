@@ -115,6 +115,6 @@ def train(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Arguments for vit training')
     parser.add_argument('--config', dest='config_path',
-                        default='config/default.yaml', type=str)
+                        default='VIT/config/default.yaml', type=str)
     args = parser.parse_args()
     train(args)
