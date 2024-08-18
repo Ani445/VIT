@@ -1,8 +1,8 @@
-# import sys
-# import os
+import sys
+import os
 
-# # Add the parent directory (VIT-Pytorch) to the sys.path
-# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add the parent directory (VIT-Pytorch) to the sys.path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 import yaml
@@ -20,7 +20,6 @@ from dataset.my_dataset import MyDataset
 from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 # import matplotlib.pyplot as plt
-
 
 
 
@@ -76,7 +75,7 @@ def train(args):
     
     # Create the model and dataset
     model = VIT(config['model_params']).to(device)
-    my_dataset = MyDataset('train', config['dataset_params'],
+    my_dataset = MyDataset('train', config,
                          im_h=config['model_params']['image_height'],
                          im_w=config['model_params']['image_width'])
     # image, cls = my_dataset[0].values()

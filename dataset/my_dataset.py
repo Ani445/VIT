@@ -45,12 +45,16 @@ class MyDataset(Dataset):
     """
     def __init__(self, split, config, im_h=224, im_w=224):
         self.split = split
-        self.db_root = config['root_dir']
+        self.db_root = config['dataset_params']['root_dir']
         self.im_h = im_h
         self.im_w = im_w
+        self.class_map = config['class_labels']
 
-        im_dir = self.db_root + "/" + self.split
+        im_dir = self.db_root + "/" + self.split 
         self.im_list = list(Path(im_dir).glob("*/*.jpg"))
+
+        print(self.im_list[0:5])
+        print(im_dir)
         
         
     def __len__(self):
@@ -60,12 +64,7 @@ class MyDataset(Dataset):
 
         image_path = self.im_list[index]
         classname = image_path.parent.stem
-        if classname == "pizza":
-            cls = 0
-        elif classname == "steak":
-            cls = 1
-        else:
-            cls = 2
+        
         im = cv2.imread(image_path)
         im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
         im = cv2.resize(im, (self.im_h, self.im_w))
@@ -81,5 +80,5 @@ class MyDataset(Dataset):
         im_tensor = 2 * (im_tensor / 255) - 1
         return {
             "image" : im_tensor,
-            "number_cls" : cls
+            "number_cls" : self.class_map[classname]
         }

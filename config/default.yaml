@@ -1,5 +1,5 @@
 dataset_params:
-  root_dir: 'data'
+  root_dir: 'data/CIFAR-10-images-master'
 
 model_params:
   n_heads: 8
@@ -10,7 +10,7 @@ model_params:
   ff_drop: 0.1
   n_layers: 6
   bg_classes: 0
-  num_classes: 3
+  num_classes: 10
   image_height: 224
   image_width: 224
   patch_height: 16
@@ -24,4 +24,18 @@ train_params:
   epochs: 100
   lr: 0.001
   seed: 1111
-  ckpt_name: 'vit_ckpt.pth'
+  ckpt_name: 'vit_ckpt2.pth'
+
+class_labels:
+  airplane: 0
+  automobile: 1
+  bird: 2
+  cat: 3
+  deer: 4
+  dog: 5
+  frog: 6
+  horse: 7
+  ship: 8
+  truck: 9
+
+
