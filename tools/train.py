@@ -93,7 +93,7 @@ def train(args):
         os.mkdir(config['train_params']['task_name'])
     
     # Load checkpoint if found
-    start_epoch = 0
+    start_epoch = 1
     if os.path.exists(os.path.join(config['train_params']['task_name'],
                                    config['train_params']['ckpt_name'])):
         print('Loading checkpoint')
@@ -102,8 +102,6 @@ def train(args):
         model.load_state_dict(ckpt['state'])
         if ckpt['epoch'] is not None:
             start_epoch = ckpt['epoch'] + 1
-        else:
-            start_epoch = 1
     best_loss = np.inf
     
     for epoch_idx in range(start_epoch, num_epochs):
