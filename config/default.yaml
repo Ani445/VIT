@@ -1,5 +1,5 @@
 dataset_params:
-  root_dir: 'VIT/CIFAR-10-images'
+  root_dir: 'CIFAR-10-images'
 
 model_params:
   n_heads: 8
