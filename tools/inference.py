@@ -56,7 +56,7 @@ def visualize_pos_embed(model):
     plt.tight_layout(pad=0.1, rect=(0.1, 0.1, 0.9, 0.9))
     fig, axs = plt.subplots(7, 7)
     count = 0
-    for i in tqdm(range(256)):
+    for i in tqdm(range(4)):
         row = i // 2
         col = i % 2
         if row % 2 == 0 and col % 2 == 0:
