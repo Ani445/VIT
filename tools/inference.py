@@ -149,8 +149,10 @@ def inference(args):
     if os.path.exists(os.path.join(config['train_params']['task_name'],
                                    config['train_params']['ckpt_name'])):
         print('Loading checkpoint')
-        model.load_state_dict(torch.load(os.path.join(config['train_params']['task_name'],
-                                                      config['train_params']['ckpt_name']), map_location=device))
+        ckpt = torch.load(os.path.join(config['train_params']['task_name'],
+                      config['train_params']['ckpt_name']), map_location=device)
+        model.load_state_dict(ckpt['state'])
+                                       
     else:
         print('No checkpoint found at {}'.format(os.path.join(config['train_params']['task_name'],
                                    config['train_params']['ckpt_name'])))
