@@ -115,11 +115,11 @@ def visualize_attn_weights(mnist, model):
         im_input = torch.permute(ims[i].detach().cpu(), (1, 2, 0)).numpy()
         im_input = im_input[:, :, [2, 1, 0]]
         im_input = (im_input+1)/2 * 255
-        mask = masks[i].reshape((14, 14)).numpy()
+        mask = masks[i].reshape((2, 2)).numpy()
         
         mask = mask/np.max(mask)
         
-        mask = cv2.resize(mask, (224, 224), interpolation=cv2.INTER_LINEAR)[..., None]
+        mask = cv2.resize(mask, (32, 32), interpolation=cv2.INTER_LINEAR)[..., None]
         if not os.path.exists('output'):
             os.mkdir('output')
         cv2.imwrite('output/input_{}.png'.format(i), im_input)
