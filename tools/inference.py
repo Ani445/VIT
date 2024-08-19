@@ -56,9 +56,9 @@ def visualize_pos_embed(model):
     plt.tight_layout(pad=0.1, rect=(0.1, 0.1, 0.9, 0.9))
     fig, axs = plt.subplots(7, 7)
     count = 0
-    for i in tqdm(range(196)):
-        row = i // 14
-        col = i % 14
+    for i in tqdm(range(256)):
+        row = i // 4
+        col = i % 4
         if row % 2 == 0 and col % 2 == 0:
             out = torch.cosine_similarity(pos_emb[i], pos_emb, dim=-1)
             fig.add_subplot(7, 7, count+1)
@@ -66,7 +66,7 @@ def visualize_pos_embed(model):
             plt.yticks([])
             count += 1
             plt.subplots_adjust(0.1, 0.1, 0.9, 0.9)
-            plt.imshow(out.reshape(14, 14), vmin=-1, vmax=1)
+            plt.imshow(out.reshape(4, 4), vmin=-1, vmax=1)
     for idx, ax in enumerate(axs.flat):
         ax.set_xticks([])
         ax.set_yticks([])
