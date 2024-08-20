@@ -140,7 +140,7 @@ def inference(args):
     # Create the model and dataset
     model = VIT(config['model_params']).to(device)
     model.eval()
-    my_dataset = MyDataset('test', config['dataset_params'],
+    my_dataset = MyDataset('test', config,
                          im_h=config['model_params']['image_height'],
                          im_w=config['model_params']['image_width'])
     my_loader = DataLoader(my_dataset, batch_size=config['train_params']['batch_size'], shuffle=True, num_workers=1)
@@ -149,8 +149,10 @@ def inference(args):
     if os.path.exists(os.path.join(config['train_params']['task_name'],
                                    config['train_params']['ckpt_name'])):
         print('Loading checkpoint')
-        model.load_state_dict(torch.load(os.path.join(config['train_params']['task_name'],
-                                                      config['train_params']['ckpt_name']), map_location=device))
+
+        ckpt = torch.load(os.path.join(config['train_params']['task_name'],
+                      config['train_params']['ckpt_name']), map_location=device)
+        model.load_state_dict(ckpt['state'])
     else:
         print('No checkpoint found at {}'.format(os.path.join(config['train_params']['task_name'],
                                    config['train_params']['ckpt_name'])))
