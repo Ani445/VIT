@@ -86,7 +86,7 @@ def train(args):
     my_loader = DataLoader(my_dataset, batch_size=config['train_params']['batch_size'], shuffle=True, num_workers=1)
     num_epochs = config['train_params']['epochs']
     optimizer = Adam(model.parameters(), lr=config['train_params']['lr'])
-    scheduler = ReduceLROnPlateau(optimizer, factor=0.5, patience=2, verbose=True)
+    # scheduler = ReduceLROnPlateau(optimizer, factor=0.5, patience=2, verbose=True)
     
     # Create output directories
     if not os.path.exists(config['train_params']['task_name']):
@@ -103,6 +103,7 @@ def train(args):
 
         start_epoch = ckpt['epoch'] + 1
         optimizer.load_state_dict(ckpt['optimizer'])
+    scheduler = ReduceLROnPlateau(optimizer, factor=0.5, patience=2, verbose=True)
     best_loss = np.inf
     
     for epoch_idx in range(start_epoch, num_epochs + 1):
