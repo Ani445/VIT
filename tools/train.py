@@ -105,7 +105,7 @@ def train(args):
         optimizer.load_state_dict(ckpt['optimizer'])
     best_loss = np.inf
     
-    for epoch_idx in range(start_epoch, num_epochs):
+    for epoch_idx in range(start_epoch, num_epochs + 1):
         mean_loss = train_for_one_epoch(epoch_idx, model, my_loader, optimizer)
         scheduler.step(mean_loss)
         # Simply update checkpoint if found better version
