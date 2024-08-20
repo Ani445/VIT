@@ -19,12 +19,12 @@ model_params:
   im_channels: 3
 
 train_params:
-  task_name: 'default'
+  task_name: 'drive/MyDrive/'
   batch_size: 8
   epochs: 100
   lr: 0.001
   seed: 1111
-  ckpt_name: 'drive/MyDrive/vit_ckpt_pizza.pth'
+  ckpt_name: 'vit_ckpt_pizza.pth'
 
 class_labels:
   pizza: 0
