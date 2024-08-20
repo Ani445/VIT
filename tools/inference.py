@@ -61,7 +61,7 @@ def visualize_pos_embed(model):
         col = i % 2
         if row % 2 == 0 and col % 2 == 0:
             out = torch.cosine_similarity(pos_emb[i], pos_emb, dim=-1)
-            fig.add_subplot(7, 7, count+1)
+            fig.add_subplot(2//2, 2//2, count+1)
             plt.xticks([])
             plt.yticks([])
             count += 1
