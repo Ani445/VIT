@@ -99,11 +99,10 @@ def train(args):
         print('Loading checkpoint')
         ckpt = torch.load(os.path.join(config['train_params']['task_name'],
                                                       config['train_params']['ckpt_name']), map_location=device)
-        if ckpt['state'] is not None:
-            model.load_state_dict(ckpt['state'])
-    
-            start_epoch = ckpt['epoch'] + 1
-            optimizer.load_state_dict(ckpt['optimizer'])
+        model.load_state_dict(ckpt['state'])
+
+        start_epoch = ckpt['epoch'] + 1
+        optimizer.load_state_dict(ckpt['optimizer'])
     best_loss = np.inf
     
     for epoch_idx in range(start_epoch, num_epochs):
