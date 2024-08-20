@@ -99,7 +99,7 @@ def train(args):
         print('Loading checkpoint')
         ckpt = torch.load(os.path.join(config['train_params']['task_name'],
                                                       config['train_params']['ckpt_name']), map_location=device)
-        if ckpt is not None:
+        if ckpt['state'] is not None:
             model.load_state_dict(ckpt['state'])
     
             start_epoch = ckpt['epoch'] + 1
