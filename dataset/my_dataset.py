@@ -51,10 +51,9 @@ class MyDataset(Dataset):
         self.class_map = config['class_labels']
 
         im_dir = self.db_root + "/" + self.split 
-        self.im_list = list(Path(im_dir).glob("*/*.jpg"))
-
+        self.im_list = [str(p) for p in Path(im_dir).glob("*/*.jpg")]
+        self.im_posix_list = list(Path(im_dir).glob("*/*.jpg"))
         print(self.im_list[0:5])
-        print(im_dir)
         
         
     def __len__(self):
@@ -63,7 +62,8 @@ class MyDataset(Dataset):
     def __getitem__(self, index):
 
         image_path = self.im_list[index]
-        classname = image_path.parent.stem
+        im_posix_path = self.im_posix_list[index]
+        classname = im_posix_path.parent.stem
         
         im = cv2.imread(image_path)
         im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
