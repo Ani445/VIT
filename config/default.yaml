@@ -1,5 +1,5 @@
 dataset_params:
-  root_dir: 'data/CIFAR-10-images-master'
+  root_dir: 'pizza-steak-sushi'
 
 model_params:
   n_heads: 8
@@ -24,7 +24,7 @@ train_params:
   epochs: 100
   lr: 0.001
   seed: 1111
-  ckpt_name: 'vit_ckpt2.pth'
+  ckpt_name: 'vit_ckpt_pizza.pth'
 
 class_labels:
   airplane: 0

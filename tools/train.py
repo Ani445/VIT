@@ -38,7 +38,7 @@ def train_for_one_epoch(epoch_idx, model, my_loader, optimizer):
     """
     losses = []
     criterion = torch.nn.CrossEntropyLoss()
-    for data in tqdm(my_loader):
+    for data in tqdm(my_loader, desc = f"epochs: {epoch_idx + 1}"):
         im = data['image'].float().to(device)
         number_cls = data['number_cls'].to(device)
         optimizer.zero_grad()
@@ -116,6 +116,6 @@ def train(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Arguments for vit training')
     parser.add_argument('--config', dest='config_path',
-                        default='config/default.yaml', type=str)
+                        default='VIT/config/default.yaml', type=str)
     args = parser.parse_args()
     train(args)
