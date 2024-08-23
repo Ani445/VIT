@@ -86,7 +86,7 @@ def train(args):
     my_loader = DataLoader(my_dataset, batch_size=config['train_params']['batch_size'], shuffle=True, num_workers=1)
     num_epochs = config['train_params']['epochs']
     optimizer = Adam(model.parameters(), lr=config['train_params']['lr'])
-    # scheduler = ReduceLROnPlateau(optimizer, factor=0.5, patience=2, verbose=True)
+    scheduler = ReduceLROnPlateau(optimizer, factor=0.5, patience=2, verbose=True)
     
     # Create output directories
     if not os.path.exists(config['train_params']['task_name']):
@@ -100,10 +100,10 @@ def train(args):
         ckpt = torch.load(os.path.join(config['train_params']['task_name'],
                                                       config['train_params']['ckpt_name']), map_location=device)
         model.load_state_dict(ckpt['state'])
-
         start_epoch = ckpt['epoch'] + 1
         optimizer.load_state_dict(ckpt['optimizer'])
-    scheduler = ReduceLROnPlateau(optimizer, factor=0.5, patience=2, verbose=True)
+        scheduler = ckpt['scheduler']
+        
     best_loss = np.inf
     
     for epoch_idx in range(start_epoch, num_epochs + 1):
@@ -115,7 +115,8 @@ def train(args):
             ckpt = {
                 'state': model.state_dict(),
                 'epoch': epoch_idx,
-                'optimizer': optimizer.state_dict() 
+                'optimizer': optimizer.state_dict(),
+                'scheduler': scheduler 
             }
             torch.save(ckpt, os.path.join(config['train_params']['task_name'],
                                                         config['train_params']['ckpt_name']))
