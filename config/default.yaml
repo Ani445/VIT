@@ -24,7 +24,7 @@ train_params:
   epochs: 300
   lr: 0.001
   seed: 1111
-  ckpt_name: 'vit_ckpt_pizza.pth'
+  ckpt_name: 'vit_ckpt_pizza_2.pth'
 
 class_labels:
   pizza: 0
